@@ -15,11 +15,15 @@ if torch.cuda.is_available():
 
 
 class GDINO:
-    def __init__(self):
-        self.build_model()
+    def __init__(self, size="tiny"):
+        self.build_model(size=size)
 
-    def build_model(self, ckpt_path: str | None = None):
-        model_id = "IDEA-Research/grounding-dino-base"
+    def build_model(self, ckpt_path: str | None = None, size="tiny"):
+        if size == "tiny":
+            model_id = "IDEA-Research/grounding-dino-tiny"
+        else:
+            model_id = "IDEA-Research/grounding-dino-base"
+            
         self.processor = AutoProcessor.from_pretrained(model_id)
         self.model = AutoModelForZeroShotObjectDetection.from_pretrained(model_id).to(
             DEVICE
