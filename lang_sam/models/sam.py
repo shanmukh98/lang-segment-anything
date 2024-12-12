@@ -46,6 +46,7 @@ class SAM:
         self.model = instantiate(cfg.model, _recursive_=True)
         self._load_checkpoint(self.model)
         self.model = self.model.to(DEVICE)
+        self.model = self.model.half()
         self.model.eval()
         self.mask_generator = SAM2AutomaticMaskGenerator(self.model)
         self.predictor = SAM2ImagePredictor(self.model)
